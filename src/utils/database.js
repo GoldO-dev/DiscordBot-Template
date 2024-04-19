@@ -1,5 +1,5 @@
 import { createConnection } from 'mysql';
-import { DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE } from "../config.js";
+import { USE_DB, DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE } from "../config.js";
 
 let connection;
 if (USE_DB) {
