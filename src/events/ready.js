@@ -1,6 +1,8 @@
 import { ActivityType } from "discord.js";
 import { rootPath } from "../../bot.js";
 import { fileReader } from "../utils/fileReader.js";
+import { connection } from "../utils/database.js";
+import { USE_DB } from "../config.js";
 import { t } from "tasai";
 
 export const Event = {
@@ -10,6 +12,17 @@ export const Event = {
         client.user?.setActivity("Humans.", {
             type: ActivityType.Watching
         });
+
+        let databaseError = {data:"",IsError:false};
+        if (USE_DB) {
+            connection.connect((err) => {
+                if (err) {
+                    databaseError = {data:err, IsError:true};
+                } else {
+                    databaseError = {data:undefined, IsError:false} ;
+                }
+            })
+        }
 
         let allSlashCommands = fileReader(`${rootPath}/src/interactions/slashCommands`);
         allSlashCommands = await allSlashCommands.reduce(async (array, slash) => {
@@ -33,5 +46,6 @@ export const Event = {
         if ((client.modalForms.size ?? 0) > 0) console.log(t.bold.brightCyan.toFunction()("[ModalForms] ") + t.bold.brightYellow.toFunction()(`Loaded ${(client.modalForms.size ?? 0)} Modals.`));
         if (allSlashCommands?.length > 0) console.log(t.bold.magenta.toFunction()("[SlashCommands] ") + t.bold.white.toFunction()(`Loaded ${allSlashCommands.length} SlashCommands.`));
         if (allContextMenus?.length > 0) console.log(t.bold.magenta.toFunction()("[ContextMenus] ") + t.bold.white.toFunction()(`Loaded ${allContextMenus.length} ContextMenus.`));
+        if (USE_DB) {if (databaseError.IsError === false) {  console.log(t.bold.yellow.toFunction()("[Database] ") + t.bold.brightGreen.toFunction()(`MySQL connected to database ${t.bold.white.toFunction()(`${connection.config.database}`)}.`)); } else { console.log(t.bold.yellow.toFunction()("[Database] ") + t.bold.brightRed.toFunction()(`MySQL connection to database ${t.bold.white.toFunction()(connection.config.database)} ${t.bold.red.toFunction()(`failed.`)} Full error message printing in ${t.bold.white.toFunction()(`1 second.`)}`)); setTimeout(() => { console.log(databaseError.data); }, 1000); }; };
     }
 }; // Log all data about the client on login.
