@@ -12,6 +12,8 @@
 The Discord Bot Template provides a solid foundation for creating feature-rich Discord bots using Discord.js. It includes various managers for handling message commands, buttons, select menus, slash commands, context menus, and modal forms. The template offers customization options, colorful logging, and a simple code structure.
 
 ## Changelog
+### UPDATE 9.0.7
+- Added support for MySQL, using the [mysql](https://www.npmjs.com/package/mysql#table-of-contents) npm package. Read the notes for more information. 
 ### IMPORTANT UPDATE 9.0.6
 
 - **Fixed Windows Support and SlashCommands & ContextMenus not Registering.**
@@ -75,6 +77,7 @@ For detailed documentation on command options and managers, please refer to the 
 - Includes a variety of commonly used command options (not applicable to events).
 - Supports management of custom events.
 - Simple and understandable code structure.
+- MySQL database compatability. (Read more about it [here](/.github/DOCS/utils/database.md))
 
 ## Notes
 
@@ -90,6 +93,7 @@ For detailed documentation on command options and managers, please refer to the 
   - `<Client>.modalForms`: Modal form interactions cache
   - `<Client>.slashCommands`: Slash commands cache
   - `<Client>.contextMenus`: ContextMenus commands cache
+- To use the database you just need to import it. Into the file you want to use it in. You can read more about it [here.](/.github/DOCS/utils/database.md)
 
 ## Installation
 
